@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dils AI Master Prompt Studio · v3.0 Universal</title>
+  <title>Dils AI Master Prompt Studio · v3.2 Firefly Pro</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .chip-active { background-color: #8b5cf6 !important; color: #fff !important; font-weight: 600; border-color: #8b5cf6 !important; }
-    .tab-active { border-bottom: 2px solid #8b5cf6; color: #a78bfa; font-weight: 600; }
+    .chip-active { background-color: #f97316 !important; color: #fff !important; font-weight: 600; border-color: #f97316 !important; }
+    .tab-active { border-bottom: 2px solid #f97316; color: #fdba74; font-weight: 600; }
   </style>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen font-sans pb-20">
@@ -16,22 +16,22 @@
   <header class="border-b border-zinc-800 bg-zinc-900/90 backdrop-blur sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex flex-wrap justify-between items-center gap-4">
       <div>
-        <span class="text-xs uppercase tracking-widest text-purple-400 font-semibold">Dils Media Network</span>
+        <span class="text-xs uppercase tracking-widest text-orange-500 font-semibold">Dils Media Network</span>
         <h1 class="text-xl font-bold text-white flex items-center gap-2">
-          AI Master Prompt Studio <span class="text-xs bg-purple-500/20 text-purple-300 border border-purple-500/30 px-2 py-0.5 rounded-full">v3.0 Pro</span>
+          AI Master Prompt Studio <span class="text-xs bg-orange-500/20 text-orange-300 border border-orange-500/30 px-2 py-0.5 rounded-full">v3.2 Firefly Pro</span>
         </h1>
       </div>
       <div class="flex gap-4 text-xs">
-        <div class="bg-zinc-800/80 px-3 py-1.5 rounded-lg border border-zinc-700">Active Engine: <strong id="engine-label" class="text-purple-400">Google Veo & Flow</strong></div>
+        <div class="bg-zinc-800/80 px-3 py-1.5 rounded-lg border border-zinc-700">Active Engine: <strong id="engine-label" class="text-orange-400">Adobe Firefly</strong></div>
       </div>
     </div>
 
     <!-- Mode Tabs -->
     <div class="max-w-7xl mx-auto px-6 flex gap-6 text-sm border-t border-zinc-800/60 bg-zinc-950/50 overflow-x-auto">
-      <button onclick="switchCategory('video')" id="tab-video" class="py-3 px-2 tab-active transition whitespace-nowrap">🎬 AI Video Creation & Human Ad</button>
+      <button onclick="switchCategory('imageEdit')" id="tab-imageEdit" class="py-3 px-2 tab-active transition whitespace-nowrap">✨ Adobe Firefly (Gen Fill & Effects)</button>
+      <button onclick="switchCategory('video')" id="tab-video" class="py-3 px-2 text-zinc-400 hover:text-white transition whitespace-nowrap">🎬 AI Video & Human Ad</button>
       <button onclick="switchCategory('image')" id="tab-image" class="py-3 px-2 text-zinc-400 hover:text-white transition whitespace-nowrap">🖼️ AI Image & Product Art</button>
-      <button onclick="switchCategory('editing')" id="tab-editing" class="py-3 px-2 text-zinc-400 hover:text-white transition whitespace-nowrap">🎞️ Video Editing, VFX & Color Grading</button>
-      <button onclick="switchCategory('chatgpt')" id="tab-chatgpt" class="py-3 px-2 text-zinc-400 hover:text-white transition whitespace-nowrap">🤖 ChatGPT Script & Concept Writer</button>
+      <button onclick="switchCategory('editing')" id="tab-editing" class="py-3 px-2 text-zinc-400 hover:text-white transition whitespace-nowrap">🎞️ Video Editing & Color Grading</button>
     </div>
   </header>
 
@@ -42,53 +42,55 @@
 
       <!-- Target AI Platform -->
       <section class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-3">
-        <h2 class="text-xs uppercase tracking-wider text-purple-400 font-bold">Target AI Platform</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-2" data-group="aiPlatform" data-single="true">
-          <button class="chip chip-active px-3 py-2 rounded-lg border border-zinc-700 bg-zinc-950 text-xs text-center">Google Veo / Flow</button>
-          <button class="chip px-3 py-2 rounded-lg border border-zinc-700 bg-zinc-950 text-xs text-center">ChatGPT (GPT-4o)</button>
+        <h2 class="text-xs uppercase tracking-wider text-orange-400 font-bold">Target AI Platform</h2>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-2" data-group="aiPlatform" data-single="true">
+          <button class="chip chip-active px-3 py-2 rounded-lg border border-zinc-700 bg-zinc-950 text-xs text-center">Adobe Firefly</button>
+          <button class="chip px-3 py-2 rounded-lg border border-zinc-700 bg-zinc-950 text-xs text-center">Google Veo / Flow</button>
           <button class="chip px-3 py-2 rounded-lg border border-zinc-700 bg-zinc-950 text-xs text-center">Midjourney v6</button>
+          <button class="chip px-3 py-2 rounded-lg border border-zinc-700 bg-zinc-950 text-xs text-center">ChatGPT (GPT-4o)</button>
           <button class="chip px-3 py-2 rounded-lg border border-zinc-700 bg-zinc-950 text-xs text-center">Runway / Sora</button>
         </div>
       </section>
 
-      <!-- Dynamic Input Section -->
-      <section class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 space-y-4">
-        <h2 id="section-title" class="text-base font-semibold text-purple-400 border-b border-zinc-800 pb-2">1. Video Creation & Human Advertisement Parameters</h2>
+      <!-- Firefly Specific Controls: Aspect Ratio & Style Reference -->
+      <section class="bg-zinc-900 border border-orange-500/30 rounded-xl p-6 space-y-4">
+        <h2 class="text-base font-semibold text-orange-400 border-b border-zinc-800 pb-2">1. Adobe Firefly Aspect Ratio & Style Reference</h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label class="block text-xs text-zinc-400 mb-1" id="label-field1">Subject / Actor / Object</label>
-            <input id="inputField1" oninput="generateMasterPrompt()" type="text" value="28-year-old professional Sri Lankan presenter speaking with a warm smile" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm focus:border-purple-500 outline-none">
+            <label class="block text-xs text-zinc-400 mb-1">Aspect Ratio</label>
+            <select id="fireflyRatio" onchange="generateMasterPrompt()" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm focus:border-orange-500 outline-none">
+              <option value="Landscape (4:3 / 16:9)">Landscape (Standard / Widescreen)</option>
+              <option value="Portrait (3:4 / 9:16)">Portrait (Vertical / Reels / Phone)</option>
+              <option value="Square (1:1)">Square (Instagram Post)</option>
+              <option value="Widescreen (21:9)">Widescreen Cinematic</option>
+            </select>
           </div>
           <div>
-            <label class="block text-xs text-zinc-400 mb-1" id="label-field2">Style / Tone / Format</label>
-            <select id="inputField2" onchange="generateMasterPrompt()" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm focus:border-purple-500 outline-none">
-              <option value="Cinematic Commercial Advertisement (9:16 Vertical)">Cinematic Commercial Advertisement (9:16 Vertical)</option>
-              <option value="High-End Product Showcase (16:9 Landscape)">High-End Product Showcase (16:9 Landscape)</option>
-              <option value="Moody Cinematic Film Still">Moody Cinematic Film Still</option>
-              <option value="Hyper-realistic E-Commerce Photography">Hyper-realistic E-Commerce Photography</option>
-            </select>
+            <label class="block text-xs text-zinc-400 mb-1">Style Reference (Image URL or Theme)</label>
+            <input id="styleRefInput" oninput="generateMasterPrompt()" type="text" placeholder="e.g., Match lighting and texture of reference image" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm focus:border-orange-500 outline-none">
           </div>
         </div>
 
         <div>
-          <label class="block text-xs text-zinc-400 mb-1" id="label-details">Detailed Action, Script or Editing Instructions</label>
-          <textarea id="detailsInput" oninput="generateMasterPrompt()" rows="3" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm focus:border-purple-500 outline-none">Holding a luxury Ceylon sapphire ring, talking directly to the audience, smooth facial expressions, studio softbox lighting, 4k resolution, ultra-detailed.</textarea>
+          <label class="block text-xs text-zinc-400 mb-1">Main Subject / Generative Fill Prompt</label>
+          <textarea id="inputField1" oninput="generateMasterPrompt()" rows="2" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm focus:border-orange-500 outline-none">A natural Ceylon blue sapphire ring set on wet dark slate rock with water droplets</textarea>
         </div>
       </section>
 
-      <!-- Cinematic & Technical Enhancements -->
+      <!-- Firefly Photo Effects & Lighting Tags -->
       <section class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 space-y-4">
-        <h2 class="text-base font-semibold text-purple-400 border-b border-zinc-800 pb-2">2. Cinematic & Technical Quality Tags</h2>
+        <h2 class="text-base font-semibold text-orange-400 border-b border-zinc-800 pb-2">2. Firefly Photo Effects & Styles</h2>
         
         <div>
-          <label class="block text-xs text-zinc-400 mb-2">Camera & Motion Style</label>
-          <div class="flex flex-wrap gap-2" data-group="camStyle">
-            <button class="chip chip-active px-3 py-1.5 rounded-lg border border-zinc-700 bg-zinc-950 text-xs">Smooth slow push-in tracking</button>
-            <button class="chip chip-active px-3 py-1.5 rounded-lg border border-zinc-700 bg-zinc-950 text-xs">Professional soft studio lighting</button>
-            <button class="chip px-3 py-1.5 rounded-lg border border-zinc-700 bg-zinc-950 text-xs">Sony A7R V, 85mm lens</button>
-            <button class="chip chip-active px-3 py-1.5 rounded-lg border border-zinc-700 bg-zinc-950 text-xs">DaVinci Resolve color graded</button>
-            <button class="chip px-3 py-1.5 rounded-lg border border-zinc-700 bg-zinc-950 text-xs">Cinematic 4K UHD, 60fps</button>
+          <label class="block text-xs text-zinc-400 mb-2">Photo Effects & Aesthetics</label>
+          <div class="flex flex-wrap gap-2" data-group="fireflyEffects">
+            <button class="chip chip-active px-3 py-1.5 rounded-lg border border-zinc-700 bg-zinc-950 text-xs">Bokeh background blur</button>
+            <button class="chip chip-active px-3 py-1.5 rounded-lg border border-zinc-700 bg-zinc-950 text-xs">Studio softbox lighting</button>
+            <button class="chip px-3 py-1.5 rounded-lg border border-zinc-700 bg-zinc-950 text-xs">Long exposure water effect</button>
+            <button class="chip px-3 py-1.5 rounded-lg border border-zinc-700 bg-zinc-950 text-xs">Vintage film color grade</button>
+            <button class="chip px-3 py-1.5 rounded-lg border border-zinc-700 bg-zinc-950 text-xs">Macro photography close-up</button>
+            <button class="chip px-3 py-1.5 rounded-lg border border-zinc-700 bg-zinc-950 text-xs">HDR high contrast</button>
           </div>
         </div>
       </section>
@@ -99,17 +101,17 @@
     <div class="lg:col-span-5 space-y-6">
       <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 sticky top-24 space-y-4">
         <div class="flex justify-between items-center">
-          <h3 class="font-bold text-white text-sm">Generated Universal AI Prompt</h3>
-          <button onclick="copyPrompt(this)" class="text-xs bg-purple-600 hover:bg-purple-500 text-white font-bold px-4 py-2 rounded-lg transition shadow-lg shadow-purple-600/20">Copy Prompt 📋</button>
+          <h3 class="font-bold text-white text-sm">Generated Firefly Pro Prompt</h3>
+          <button onclick="copyPrompt(this)" class="text-xs bg-orange-600 hover:bg-orange-500 text-white font-bold px-4 py-2 rounded-lg transition shadow-lg shadow-orange-600/25">Copy Prompt 📋</button>
         </div>
         
-        <p class="text-xs text-zinc-400">Copy and paste this into ChatGPT, Google Flow, or Midjourney:</p>
+        <p class="text-xs text-zinc-400">Copy and paste this into Adobe Firefly:</p>
         
-        <textarea id="outputPrompt" rows="18" readonly class="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-4 text-xs font-mono text-purple-300 focus:outline-none leading-relaxed"></textarea>
+        <textarea id="outputPrompt" rows="18" readonly class="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-4 text-xs font-mono text-orange-300 focus:outline-none leading-relaxed"></textarea>
 
         <div class="p-4 bg-zinc-950 border border-zinc-800 rounded-xl space-y-2 text-xs text-zinc-400">
-          <strong class="text-white block">💡 Universal Pro Tip:</strong>
-          <p>You can feed this prompt directly into ChatGPT to generate a refined script, or paste it into Google Veo / Midjourney for instant media generation.</p>
+          <strong class="text-white block">💡 Firefly Pro Tip:</strong>
+          <p>Firefly excels when you combine descriptive subject prompts with specific effects like Bokeh and Studio Lighting. Use the Style Reference box to match visual tones.</p>
         </div>
       </div>
     </div>
@@ -117,46 +119,16 @@
   </main>
 
   <script>
-    let activeCategory = 'video';
+    let activeCategory = 'imageEdit';
 
     function switchCategory(cat) {
       activeCategory = cat;
-      ['video', 'image', 'editing', 'chatgpt'].forEach(c => {
-        document.getElementById(`tab-${c}`).className = (c === cat) ? 'py-3 px-2 tab-active transition whitespace-nowrap' : 'py-3 px-2 text-zinc-400 hover:text-white transition whitespace-nowrap';
-      });
-
-      const config = {
-        video: {
-          title: '1. AI Video Creation & Human Advertisement Parameters',
-          f1Label: 'Actor / Subject Profile',
-          f1Val: '28-year-old professional Sri Lankan presenter with a trustworthy smile',
-          details: 'Holding a luxury gem product, talking directly to the camera, smooth facial expressions, studio softbox lighting, 4k resolution.'
-        },
-        image: {
-          title: '1. AI Image Creation & E-Commerce Product Parameters',
-          f1Label: 'Product / Main Subject',
-          f1Val: 'Natural royal blue Ceylon sapphire ring on wet dark slate rock',
-          details: 'Hyper-detailed macro photography, dramatic rim lighting, water droplets, ultra-sharp focus, commercial grade.'
-        },
-        editing: {
-          title: '1. Video Editing, VFX & Color Grading Parameters',
-          f1Label: 'Footage Type / Scene',
-          f1Val: 'Raw cinematic travel vlog footage shot in Kandy, Sri Lanka',
-          details: 'Color grade in DaVinci Resolve with warm teal and orange cinematic LUTs, smooth cross-dissolve transitions, crisp audio mastering.'
-        },
-        chatgpt: {
-          title: '1. ChatGPT Script Writing & Content Strategy Parameters',
-          f1Label: 'Topic / Business Niche',
-          f1Val: 'Instagram Reel script for promoting a luxury gem and jewelry brand',
-          details: 'Write a high-converting 30-second AIDA hook script in English/Sinhala with visual cues and a strong call-to-action.'
+      ['imageEdit', 'video', 'image', 'editing'].forEach(c => {
+        const btn = document.getElementById(`tab-${c}`);
+        if (btn) {
+          btn.className = (c === cat) ? 'py-3 px-2 tab-active transition whitespace-nowrap' : 'py-3 px-2 text-zinc-400 hover:text-white transition whitespace-nowrap';
         }
-      };
-
-      document.getElementById('section-title').innerText = config[cat].title;
-      document.getElementById('label-field1').innerText = config[cat].f1Label;
-      document.getElementById('inputField1').value = config[cat].f1Val;
-      document.getElementById('detailsInput').value = config[cat].details;
-
+      });
       generateMasterPrompt();
     }
 
@@ -181,35 +153,27 @@
     }
 
     function generateMasterPrompt() {
-      const platform = getSelected('aiPlatform')[0] || 'Google Veo / Flow';
+      const platform = getSelected('aiPlatform')[0] || 'Adobe Firefly';
       document.getElementById('engine-label').innerText = platform;
 
-      const f1 = document.getElementById('inputField1').value.trim();
-      const f2 = document.getElementById('inputField2').value;
-      const details = document.getElementById('detailsInput').value.trim();
-      const cams = getSelected('camStyle').join(', ');
+      const subject = document.getElementById('inputField1').value.trim();
+      const ratio = document.getElementById('fireflyRatio').value;
+      const styleRef = document.getElementById('styleRefInput').value.trim();
+      const effects = getSelected('fireflyEffects').join(', ');
 
       let prompt = "";
 
-      if (platform.includes('ChatGPT')) {
-        prompt = `Act as an expert Content Strategist and Prompt Engineer. 
-Task Category: ${activeCategory.toUpperCase()} (${f2}).
-Core Subject/Topic: ${f1}.
-Detailed Instructions: ${details}.
-Additional Parameters: ${cams}.
-Provide a structured, professional, high-converting response optimized for immediate execution.`;
+      if (platform.includes('Adobe Firefly')) {
+        prompt = `Adobe Firefly Master Prompt:
+- Subject / Action: ${subject}
+- Aspect Ratio: ${ratio}
+- Photo Effects & Lighting: ${effects}
+${styleRef ? `- Style Reference / Theme Match: ${styleRef}` : ''}
+- Quality Guidelines: Photorealistic texture rendering, seamless pixel blending, commercial studio quality, high definition 8k.`;
       } else if (platform.includes('Google Veo') || platform.includes('Runway')) {
-        prompt = `Cinematic video generation prompt for ${platform}. 
-Style & Format: ${f2}. 
-Subject/Actor: ${f1}. 
-Action & Scene Flow: ${details}. 
-Camera & Lighting: ${cams}. 
-Output Requirements: Photorealistic, 4k resolution, smooth motion, high broadcast quality.`;
+        prompt = `Cinematic video generation prompt for ${platform}. Format: ${ratio}. Subject: ${subject}. Effects: ${effects}. 4K UHD, photorealistic.`;
       } else {
-        prompt = `Master AI Prompt for ${platform} (${activeCategory.toUpperCase()}): 
-${f1}, styled as a ${f2}. 
-Scene Details: ${details}. 
-Technical Specs: ${cams}, ultra-detailed, professional quality.`;
+        prompt = `${subject}, Aspect Ratio: ${ratio}, Effects: ${effects}, Style Reference: ${styleRef}, ultra-detailed, professional grade.`;
       }
 
       document.getElementById('outputPrompt').value = prompt;
